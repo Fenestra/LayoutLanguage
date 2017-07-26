@@ -50,8 +50,19 @@ trait GraphicWithCaption extends GraphicItem {
 }
 
 case class GraphicImageWithCaption(data : String, text : String) extends GraphicWithCaption {
-  private val image = BlockGraphic("png", Length.dimension("1in"), Length.dimension("1in"),
-    Length.dimension("0fu"), Length.dimension("0fu"), ImageData.dataFor(ImageData.SEAL))
+  private val image = BlockGraphic.createGraphic("png", Length.dimension(".5in"), Length.dimension(".5in"),
+    Length.dimension("0fu"), Length.dimension("0fu"), ImageData.SEAL)
+
+  override def graphicSVG(loc : Location) : String = {
+    image.toSVG(loc, false)
+  }
+
+  override def captionText : String = text
+}
+
+case class GraphicBarcodeWithCaption(data : String, text : String) extends GraphicWithCaption {
+  private val image = BlockGraphic.createGraphic("bar-code", Length.dimension("1in"), Length.dimension(".5in"),
+    Length.dimension("0fu"), Length.dimension("0fu"), data)
 
   override def graphicSVG(loc : Location) : String = {
     image.toSVG(loc, false)

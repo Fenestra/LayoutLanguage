@@ -35,7 +35,9 @@ object Main {
       addItem(GraphicBracketWithCaption("north", "northRedBracket", "red")).
       addItem(GraphicBracketWithCaption("west", "westGreenBracket", "green")).
       addItem(GraphicBracketWithCaption("south", "southOrangeBracket", "orange")).
-      addItem(GraphicImageWithCaption("box", "seal image"))
+      addItem(GraphicImageWithCaption("box", "seal image")).
+      addItem(GraphicBarcodeWithCaption("2475425675", "barcode"))
+
 
     loc = loc.moveDown(Length.dimension("2.5in")).shrinkHeight(Length.dimension(".5in"))
 //    loc.top = Length.dimension("5.5in")
