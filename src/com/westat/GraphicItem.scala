@@ -16,6 +16,10 @@ trait GraphicItem {
   def toSvg(loc : Location) : String = toString+"\n"
 }
 
+trait TextItem extends GraphicItem {
+  def addText(text: String, aFont: GidsFont = null): TextItem
+}
+
 case class GraphicImage(data : String) extends GraphicItem
 
 case class GraphicShape(graphicType : String) extends GraphicItem {
@@ -25,14 +29,17 @@ case class GraphicShape(graphicType : String) extends GraphicItem {
   }
 }
 
-case class GraphicText(font : GidsFont, color : String, textAlign : TextAlignments.Value) extends GraphicItem {
+case class GraphicText(font : GidsFont, color : String, textAlign : TextAlignments.Value) extends TextItem {
   private val blocktext = BlockText(font, textAlign)
   override def toSvg(loc : Location) : String = {
     blocktext.toSVG(loc, false)
   }
 
-  def addText(text : String) : GraphicText = {
-    blocktext.addText(InlineText(text, font))
+  def addText(text : String, aFont : GidsFont = null) : TextItem = {
+    if (aFont == null)
+      blocktext.addText(InlineText(text, font))
+    else
+      blocktext.addText(InlineText(text, aFont))
     this
   }
 }
@@ -49,8 +56,12 @@ trait GraphicWithCaption extends GraphicItem {
   }
 }
 
+trait TextWithCaption extends GraphicWithCaption {
+  def addText(text: String, aFont: GidsFont = null): TextWithCaption
+}
+
 case class GraphicImageWithCaption(data : String, text : String) extends GraphicWithCaption {
-  private val image = BlockGraphic.createGraphic("png", Length.dimension(".5in"), Length.dimension(".5in"),
+  private val image = BlockGraphic.createGraphic("png", Length.dimension(".75in"), Length.dimension(".75in"),
     Length.dimension("0fu"), Length.dimension("0fu"), ImageData.SEAL)
 
   override def graphicSVG(loc : Location) : String = {
@@ -61,7 +72,7 @@ case class GraphicImageWithCaption(data : String, text : String) extends Graphic
 }
 
 case class GraphicBarcodeWithCaption(data : String, text : String) extends GraphicWithCaption {
-  private val image = BlockGraphic.createGraphic("bar-code", Length.dimension("1in"), Length.dimension(".5in"),
+  private val image = BlockGraphic.createGraphic("barcode", Length.dimension("1in"), Length.dimension(".5in"),
     Length.dimension("0fu"), Length.dimension("0fu"), data)
 
   override def graphicSVG(loc : Location) : String = {
@@ -100,7 +111,7 @@ case class GraphicShapeWithCaption(graphicType : String, text : String, width : 
   override def captionText : String = text
 }
 
-case class GraphicTextWithCaption(font : GidsFont, color : String, textAlign : TextAlignments.Value, text : String, caption : String) extends GraphicWithCaption {
+case class GraphicTextWithCaption(font : GidsFont, color : String, textAlign : TextAlignments.Value, text : String, caption : String) extends TextWithCaption {
   private val blocktext = BlockText(font, textAlign)
   blocktext.addText(InlineText(text, font))
 
@@ -110,5 +121,13 @@ case class GraphicTextWithCaption(font : GidsFont, color : String, textAlign : T
   }
 
   override def captionText : String = caption
+
+  def addText(text : String, aFont : GidsFont = null) : TextWithCaption = {
+    if (aFont == null)
+      blocktext.addText(InlineText(text, font))
+    else
+      blocktext.addText(InlineText(text, aFont))
+    this
+  }
 }
 
