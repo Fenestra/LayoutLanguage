@@ -25,7 +25,7 @@ object Main {
       addItem(GraphicShapeWithCaption("triangle-south", "southTriangle")).
       addItem(GraphicShapeWithCaption("box", "smallNormalBox", Length.dimension(".5in"), Length.dimension(".5in"))).
       addItem(GraphicShapeWithCaption("diamond", "diamond")).
-      addItem(GraphicShapeWithCaption("ellipse", "ellipse", Length.dimension("1in"), Length.dimension("1in")))
+      addItem(GraphicShapeWithCaption("ellipse", "ellipse", Length.dimension(".75in"), Length.dimension("1in")))
 
     loc = loc.moveDown(Length.dimension("2in"))
     page.addGroup(Group("bracketBand", LayoutOrientations.loHorizontal, loc, Length.dimension("1in"))).
