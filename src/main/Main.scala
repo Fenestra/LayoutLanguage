@@ -54,15 +54,15 @@ object Main {
 
     loc = loc.moveDown(Length.dimension("1.5in"))
     page.addGroup(Group("inlineFontsBand", LayoutOrientations.loHorizontal, loc, Length.dimension("1in"))).
-      addItem(GraphicTextWithCaption(font, "tan", TextAlignments.taLeft, "U.S. Corporation is the", "leftbold").
+      addItem(GraphicTextWithCaption(font, "tan", TextAlignments.taLeft, "U.S. Corp is the", "leftbold").
         addText("best", boldfont).
         addText("company.")
       ).
-      addItem(GraphicTextWithCaption(font, "yellow", TextAlignments.taCenter, "U.S. Corporation is the", "centerbold").
+      addItem(GraphicTextWithCaption(font, "yellow", TextAlignments.taCenter, "U.S. Corp is the", "centerbold").
       addText("best", boldfont).
       addText("company.")
       ).
-      addItem(GraphicTextWithCaption(font, "pink", TextAlignments.taRight, "U.S. Corporation is the", "rightitalic").
+      addItem(GraphicTextWithCaption(font, "pink", TextAlignments.taRight, "U.S. Corp is the", "rightitalic").
         addText("best", italicfont).
         addText("company.")
       )
