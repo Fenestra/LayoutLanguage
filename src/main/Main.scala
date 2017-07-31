@@ -40,7 +40,7 @@ object Main {
     loc = loc.moveDown(Length.dimension("2.5in")).shrinkHeight(Length.dimension(".5in"))
     val font = GidsFont("Arial", "black", "", Length.dimension("10pt"))
     val boldfont = GidsFont("Arial", "black", "700", Length.dimension("10pt"))
-    val italicfont = GidsFont("Arial", "black", "500", Length.dimension("10pt"))
+    val italicfont = GidsFont("Arial", "black", "", Length.dimension("10pt"), true)
     page.addGroup(Group("textAlignBand", LayoutOrientations.loHorizontal, loc, Length.dimension("1in"))).
       addItem(GraphicTextWithCaption(font, "tan", TextAlignments.taLeft, "U.S. Corporation", "left")).
       addItem(GraphicTextWithCaption(font, "yellow", TextAlignments.taCenter, "U.S. Corporation", "center")).
@@ -54,17 +54,17 @@ object Main {
 
     loc = loc.moveDown(Length.dimension("1.5in"))
     page.addGroup(Group("inlineFontsBand", LayoutOrientations.loHorizontal, loc, Length.dimension("1in"))).
-      addItem(GraphicTextWithCaption(font, "tan", TextAlignments.taLeft, "U.S. Corp is the", "leftbold").
+      addItem(GraphicTextWithCaption(font, "tan", TextAlignments.taLeft, "U.S. Corporation is one of, if not the very", "leftbold").
         addText("best", boldfont).
-        addText("company.")
+        addText("companies ever, you betcha.")
       ).
-      addItem(GraphicTextWithCaption(font, "yellow", TextAlignments.taCenter, "U.S. Corp is the", "centerbold").
+      addItem(GraphicTextWithCaption(font, "yellow", TextAlignments.taCenter, "U.S. Corporation is one of, if not the very", "centerbold").
       addText("best", boldfont).
-      addText("company.")
+      addText("companies ever, you betcha.")
       ).
-      addItem(GraphicTextWithCaption(font, "pink", TextAlignments.taRight, "U.S. Corp is the", "rightitalic").
-        addText("best", italicfont).
-        addText("company.")
+      addItem(GraphicTextWithCaption(font, "pink", TextAlignments.taRight, "U.S. Corporation is one of, if not the very", "rightitalic").
+      addText("best", italicfont).
+      addText("companies ever, you betcha.")
       )
 
     StringUtilities.writeFile("test.svg", page.toSVG)
