@@ -2,7 +2,6 @@ package com.westat
 
 import com.westat.gids.GidsFont
 import com.westat.sfo._
-import com.westat.Length
 import scala.collection.mutable.StringBuilder
 
 
