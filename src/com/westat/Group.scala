@@ -1,8 +1,5 @@
 package com.westat
 
-//import com.westat.gids.GidsFont
-//import com.westat.sfo.TextAlignments
-import com.westat.{Location, Length}
 import scala.collection.mutable.StringBuilder
 
 /**

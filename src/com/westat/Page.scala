@@ -22,9 +22,12 @@ case class Page(name : String, width : Length, height : Length, color : String) 
     val sb = new StringBuilder(
       s"""<svg id="$name" width="${width.asInchesString}" height="${height.asInchesString}"
       zoomAndPan="magnify" preserveAspectRatio="xMidYMid meet"
-      viewbox="0 0 ${width.asInchesString} ${height.asInchesString}"
       xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">\n""")
-    sb.append(s"""<rect x="0" y="0" width="${width.asInchesString}" height="${height.asInchesString}" fill="$color"/>\n """)
+    //    s"""<svg id="$name" width="${width.asDeviceUnits}" height="${height.asDeviceUnits}"
+//    zoomAndPan="magnify" preserveAspectRatio="xMidYMid meet"
+//    viewbox="0 0 ${width.asDeviceUnits} ${height.asDeviceUnits}"
+//    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">\n""")
+    sb.append(s"""<rect x="0" y="0" width="${width.asInchesString}" height="${height.asInchesString}" fill="$color"/>\n""")
     list.foreach(g => sb.append(g.toSVG))
     sb.append("</svg>")
     sb.toString()
