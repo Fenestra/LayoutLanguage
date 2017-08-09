@@ -48,7 +48,6 @@ trait GraphicWithCaption extends GraphicItem {
   def captionText : String
   override def toSvg(loc : Location) : String = {
     val sb = new StringBuilder(graphicSVG(loc))
-// println(sb.toString())
     val cent = loc.left + (defaultWidth / 2)
     sb.append(s"""   <text x="${cent.asInchesString}" y="${(loc.top + defaultHeight + Length.dimension("9pt")).asInchesString}" text-anchor="middle" >$captionText</text>\n""")
     sb.toString()
@@ -71,11 +70,45 @@ case class GraphicImageWithCaption(data : String, text : String) extends Graphic
 }
 
 case class GraphicBarcodeWithCaption(data : String, text : String) extends GraphicWithCaption {
-  private val image = BlockGraphic.createGraphic("barcode", Length.dimension("1in"), Length.dimension(".5in"),
+  private val image = BlockGraphic.createGraphic("bar-code", Length.dimension("1in"), Length.dimension(".5in"),
     Length.dimension("0fu"), Length.dimension("0fu"), data)
 
   override def graphicSVG(loc : Location) : String = {
     image.toSVG(loc, false)
+  }
+
+  override def captionText : String = text
+}
+
+case class GraphicEyeReadableWithCaption(data : String, text : String) extends GraphicWithCaption {
+  private val image = BlockGraphic.createGraphic("eye-readable-number", Length.dimension("1in"), Length.dimension(".5in"),
+    Length.dimension("0fu"), Length.dimension("0fu"), data)
+
+  override def graphicSVG(loc : Location) : String = {
+    image.toSVG(loc, false)
+  }
+
+  override def captionText : String = text
+}
+
+case class GraphicRotatedTextWithCaption(data : String, angle : String, font : GidsFont, text : String) extends GraphicWithCaption {
+  private val rot = BlockRotatedText(data, angle, font, Length.dimension("1in"), Length.dimension("1in"))
+
+  override def graphicSVG(loc : Location) : String = {
+    val sloc = loc.adjustPadding(Length.dimension("1pt"), Length.dimension("1pt"))
+    s"""<rect x="${sloc.left.asInchesString}" y="${sloc.top.asInchesString}" width="${(sloc.right - sloc.left).asInchesString}" height="${(sloc.bottom - sloc.top).asInchesString}" fill="pink"/>\n """ +
+    rot.toSVG(loc, false)
+  }
+
+  override def captionText : String = text
+}
+
+case class GraphicReverseCircleWithCaption(circleKind : ReverseCircleKinds.Value, content : String, text : String) extends GraphicWithCaption {
+  private val rot = BlockReverseCircle(circleKind, content)
+
+  override def graphicSVG(loc : Location) : String = {
+    s"""<rect x="${loc.left.asInchesString}" y="${loc.top.asInchesString}" width="${(loc.right - loc.left).asInchesString}" height="${(loc.bottom - loc.top).asInchesString}" fill="pink"/>\n """ +
+    rot.toSVG(loc, false)
   }
 
   override def captionText : String = text

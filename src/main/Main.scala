@@ -1,7 +1,7 @@
 package main
 
 
-import com.westat.sfo.TextAlignments
+import com.westat.sfo.{ReverseCircleKinds, TextAlignments}
 import com.westat.{Length, Location}
 import com.westat._
 import com.westat.gids.GidsFont
@@ -13,10 +13,16 @@ import com.westat.gids.GidsFont
 object Main {
 
   def main(args: Array[String]): Unit = {
+
+//    val props = PropertyFile("Layout.props")
+//    println(s"""value of dpi is ${props.value("dpi")}""")
+    Length.setDeviceDPI(96) // props.value("dpi").toInt)
+
     val page = Pages.pageForName("Letter portrait") match {
       case Some(p) => p
       case None => null
     }
+ //   Length.test
     var loc = Location.create(".5in", "1in", "7.5in", "1.5in")
     page.addGroup(Group("shapeBand", LayoutOrientations.loHorizontal, loc, Length.dimension("1in"))).
       addItem(GraphicShapeWithCaption("triangle-east", "eastTriangle")).
@@ -34,11 +40,21 @@ object Main {
       addItem(GraphicBracketWithCaption("west", "westGreenBracket", "green")).
       addItem(GraphicBracketWithCaption("south", "southOrangeBracket", "orange")).
       addItem(GraphicImageWithCaption("box", "seal image")).
-      addItem(GraphicBarcodeWithCaption("2475425675", "barcode"))
+      addItem(GraphicBarcodeWithCaption("2475425675", "bar-code"))
 
-
-    loc = loc.moveDown(Length.dimension("2.5in")).shrinkHeight(Length.dimension(".5in"))
     val font = GidsFont("Arial", "black", "", Length.dimension("10pt"))
+    loc = loc.moveDown(Length.dimension("2in")) // now top = Length.dimension("3in")
+    page.addGroup(Group("newstuffBand", LayoutOrientations.loHorizontal, loc, Length.dimension("1in"))).
+      addItem(GraphicEyeReadableWithCaption("0123456789", "eyeReadableNumber")).
+      addItem(GraphicReverseCircleWithCaption(ReverseCircleKinds.rckEcon, "4", "econReverseCrcl")).
+      addItem(GraphicReverseCircleWithCaption(ReverseCircleKinds.rckACSColor, "3", "arrowRevCrcl")).
+      addItem(GraphicRotatedTextWithCaption("Some rotated text", "45", font, "45RotatedText")).
+      addItem(GraphicRotatedTextWithCaption("More rotated text", "90", font, "90RotatedText")).
+      addItem(GraphicRotatedTextWithCaption("Rotated text", "135", font, "135RotatedText")).
+      addItem(GraphicRotatedTextWithCaption("UpsideDown text", "180", font, "180RotatedText"))
+
+
+    loc = loc.moveDown(Length.dimension("2in")).shrinkHeight(Length.dimension(".5in"))
     val boldfont = GidsFont("Arial", "black", "700", Length.dimension("10pt"))
     val italicfont = GidsFont("Arial", "black", "", Length.dimension("10pt"), true)
     page.addGroup(Group("textAlignBand", LayoutOrientations.loHorizontal, loc, Length.dimension("1in"))).
